@@ -65,7 +65,34 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 <label>Guests (Max 6)</label>
 <input type="number" name="guests" min="1" max="6" required>
+<!-- 🌿 LEAF PICKING GAME -->
+<!-- 🌿 LEAF PICKING GAME -->
+<div class="leaf-game">
 
+  <h3>🌿 Pick Your Lucky Leaf</h3>
+
+  <div class="leaf-container" id="leafContainer"></div>
+
+  <div id="rewardPopup" class="reward-popup">
+
+    <div class="reward-box">
+
+      <h2>🎉 Your Surprise Reward</h2>
+
+      <p id="rewardText"></p>
+
+      <button onclick="closeReward()">
+        Awesome 🌿
+      </button>
+
+    </div>
+
+  </div>
+
+  <input type="hidden" name="reward" id="rewardInput">
+
+</div>
+</div>
 <button type="submit" id="submitBtn">🌿 Submit Booking</button>
 
 </form>
@@ -142,7 +169,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 // ==============================
 // 🔗 SCRIPT URL
 // ==============================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCDfJ9rxnCWKOfvSRjXh-kdsuevP5b4AD51C23ROgI5wqxV1d9ojGhNcrJqUEY_ocKjQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzCySmyMABI89-8spu4WAavbOQcFRaquBsOT_3L7gITDjBNCBbFplYPgVvfwOEiCZr5tQ/exec";
 
 // ==============================
 // 📅 GLOBAL
@@ -251,6 +278,7 @@ document.getElementById("bookingForm").addEventListener("submit", function(e) {
         "🌿 Booking Request Sent!\n\n" +
         "📩 You will receive confirmation email.\n\n" +
         "Thank you for choosing Savali 🌿"
+        
       );
 
       document.getElementById("bookingForm").reset();
@@ -274,7 +302,187 @@ document.getElementById("bookingForm").addEventListener("submit", function(e) {
   });
 
 });
+// ==============================
+// 🌿 LEAF GAME
+// ==============================
 
+const leafContainer =
+  document.getElementById("leafContainer");
+
+const rewardPopup =
+  document.getElementById("rewardPopup");
+
+const rewardText =
+  document.getElementById("rewardText");
+
+const rewardInput =
+  document.getElementById("rewardInput");
+
+const phoneInput =
+  document.querySelector('[name="phone"]');
+
+const checkinInput =
+  document.querySelector('[name="checkin"]');
+
+const checkoutInput =
+  document.querySelector('[name="checkout"]');
+
+// 🍃 Leaf icons
+const leafIcons = [
+  "🍃","🍀","🌿","🍂","🍁","☘️"
+];
+
+// 🎁 Rewards
+function generateReward(){
+
+  const random = Math.random();
+
+  if(random < 0.30){
+    return "5% OFF";
+  }
+  else if(random < 0.50){
+    return "₹500 OFF";
+  }
+  else if(random < 0.68){
+    return "Free Tea for 2";
+  }
+  else if(random < 0.82){
+    return "Bonfire Free";
+  }
+  else if(random < 0.92){
+    return "Free Breakfast for 2";
+  }
+  else if(random < 0.98){
+    return "10% OFF";
+  }
+  else{
+    return "🎁 Surprise Gift";
+  }
+
+}
+
+// ==============================
+// 🔑 UNIQUE BOOKING KEY
+// ==============================
+function getBookingKey(){
+
+  const phone =
+    phoneInput.value.trim();
+
+  const checkin =
+    checkinInput.value.trim();
+
+  const checkout =
+    checkoutInput.value.trim();
+
+  return `saavaliReward_${phone}_${checkin}_${checkout}`;
+
+}
+
+// ==============================
+// 🍃 CREATE LEAVES
+// ==============================
+for(let i = 0; i < 6; i++){
+
+  const leaf =
+    document.createElement("div");
+
+  leaf.className = "leaf";
+
+  // random leaf icon
+  leaf.innerHTML =
+    leafIcons[
+      Math.floor(
+        Math.random() * leafIcons.length
+      )
+    ];
+
+  leaf.addEventListener("click", () => {
+
+    // Require booking info first
+    if(
+      !phoneInput.value ||
+      !checkinInput.value ||
+      !checkoutInput.value
+    ){
+
+      alert(
+        "⚠ Please enter phone number and select dates first."
+      );
+
+      return;
+
+    }
+
+    // Unique booking key
+    const bookingKey =
+      getBookingKey();
+
+    // Existing reward
+    let savedReward =
+      localStorage.getItem(bookingKey);
+
+    // SAME booking → SAME reward
+    if(savedReward){
+
+      rewardText.innerHTML =
+        savedReward;
+
+      rewardPopup.style.display =
+        "flex";
+
+      rewardInput.value =
+        savedReward;
+
+      return;
+
+    }
+
+    // NEW booking → NEW reward
+    const reward =
+      generateReward();
+
+    // Save only for this booking
+    localStorage.setItem(
+      bookingKey,
+      reward
+    );
+
+    // Animation
+    leaf.style.transform =
+      "scale(1.3) rotate(12deg)";
+
+    leaf.style.background =
+      "#a5d6a7";
+
+    setTimeout(() => {
+
+      rewardText.innerHTML =
+        reward;
+
+      rewardPopup.style.display =
+        "flex";
+
+      rewardInput.value =
+        reward;
+
+    }, 400);
+
+  });
+
+  leafContainer.appendChild(leaf);
+
+}
+
+// ==============================
+// ❌ CLOSE POPUP
+// ==============================
+function closeReward(){
+
+  rewardPopup.style.display =
+    "none";
+
+}
 </script>
 
 </body>
