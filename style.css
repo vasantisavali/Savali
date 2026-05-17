@@ -401,27 +401,345 @@ color: #f4d35e;
   border-radius: 25px;
   text-decoration: none;
 }
-.availability-box {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 25px;
-  background: #f4fff4;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  text-align: left;
+/* =========================
+📅 AVAILABILITY SECTION
+========================= */
+
+.availability-box{
+
+max-width:500px;
+margin:30px auto;
+
+padding:25px;
+
+background:#ffffff;
+
+border-radius:18px;
+
+box-shadow:0 8px 25px rgba(0,0,0,0.12);
+
+text-align:left;
+
+border:1px solid #e0e0e0;
+
 }
 
-.availability-box input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.availability-box h3{
+
+text-align:center;
+
+margin-bottom:20px;
+
+color:#1b5e20;
+
+font-size:24px;
+
 }
 
-#availability-msg {
-  margin-top: 10px;
-  font-weight: bold;
+.availability-box label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-weight:600;
+
+color:#333;
+
+}
+
+.availability-box input{
+
+width:100%;
+
+padding:14px;
+
+margin-bottom:18px;
+
+border-radius:10px;
+
+border:1px solid #ccc;
+
+font-size:16px;
+
+box-sizing:border-box;
+
+transition:0.3s;
+
+}
+
+.availability-box input:focus{
+
+border-color:#2e7d32;
+
+outline:none;
+
+box-shadow:0 0 8px rgba(46,125,50,0.2);
+
+}
+
+/* =========================
+📢 AVAILABILITY MESSAGE BOX
+========================= */
+
+#availability-msg{
+
+margin-top:20px;
+
+padding:18px;
+
+border-radius:14px;
+
+font-size:16px;
+
+font-weight:600;
+
+line-height:1.7;
+
+text-align:center;
+
+display:block;
+
+animation:fadeIn 0.4s ease;
+
+}
+
+/* SUCCESS */
+
+.success-box{
+
+background:#e8f5e9;
+
+color:#1b5e20;
+
+border:2px solid #66bb6a;
+
+}
+
+/* ERROR */
+
+.error-box{
+
+background:#ffebee;
+
+color:#c62828;
+
+border:2px solid #ef5350;
+
+}
+
+/* LOADING */
+
+.loading-box{
+
+background:#fff8e1;
+
+color:#f57f17;
+
+border:2px solid #fbc02d;
+
+}
+
+/* =========================
+✨ BOOKING FORM ANIMATION
+========================= */
+
+#bookingSection{
+
+animation:slideUp 0.5s ease;
+
+margin-top:30px;
+
+}
+
+/* =========================
+✨ ANIMATIONS
+========================= */
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(10px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes slideUp{
+
+from{
+opacity:0;
+transform:translateY(30px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* =========================
+📱 MOBILE RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+.availability-box{
+
+padding:20px;
+
+margin:20px 10px;
+
+border-radius:15px;
+
+}
+
+.availability-box h3{
+
+font-size:22px;
+
+}
+
+.availability-box input{
+
+font-size:16px;
+
+padding:15px;
+
+}
+
+#availability-msg{
+
+font-size:15px;
+/* =========================
+✅ SUGGESTED STAY BOX
+========================= */
+
+.suggest-box{
+
+background:#f1fff1;
+
+border:2px solid #66bb6a;
+
+padding:18px;
+
+border-radius:14px;
+
+margin-top:15px;
+
+color:#1b5e20;
+
+font-weight:600;
+
+line-height:1.8;
+
+}
+
+/* =========================
+🎯 SUGGEST BUTTONS
+========================= */
+
+.suggest-btn{
+
+border:none;
+
+padding:12px 18px;
+
+margin:8px;
+
+border-radius:10px;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+/* YES BUTTON */
+
+.yes-btn{
+
+background:#2e7d32;
+
+color:white;
+
+}
+
+.yes-btn:hover{
+
+background:#1b5e20;
+
+transform:scale(1.03);
+
+}
+
+/* NO BUTTON */
+
+.no-btn{
+
+background:#ef5350;
+
+color:white;
+
+}
+
+.no-btn:hover{
+
+background:#c62828;
+
+transform:scale(1.03);
+
+}
+
+/* =========================
+📱 MOBILE RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+.suggest-btn{
+
+width:100%;
+
+margin:8px 0;
+
+font-size:16px;
+
+padding:14px;
+
+}
+
+.suggest-box{
+
+font-size:15px;
+
+line-height:1.7;
+
+}
+
+}
+padding:16px;
+
+line-height:1.6;
+
+}
+
+#bookingSection{
+
+margin-top:20px;
+
+}
+
 }
 /* ===== GALLERY PAGE ONLY ===== */
 
@@ -843,55 +1161,4 @@ color: #f4d35e;
     padding: 8px 20px;
   }
 
-}
-/* Booked dates clearly visible */
-.flatpickr-day.flatpickr-disabled,
-.flatpickr-day.flatpickr-disabled:hover {
-
-  background: #ff5252 !important;
-  color: white !important;
-
-  border-color: #ff5252 !important;
-
-  opacity: 1 !important;
-
-  border-radius: 50% !important;
-
-  width: 32px !important;
-  height: 32px !important;
-  line-height: 32px !important;
-
-  margin: 4px auto;
-
-  font-size: 13px;
-}
-
-/* Selected dates */
-.flatpickr-day.selected {
-
-  background: #2e7d32 !important;
-  border-color: #2e7d32 !important;
-
-  border-radius: 50% !important;
-
-  width: 32px !important;
-  height: 32px !important;
-  line-height: 32px !important;
-
-  margin: 4px auto;
-}
-
-/* Normal dates */
-.flatpickr-day {
-
-  width: 32px !important;
-  height: 32px !important;
-  line-height: 32px !important;
-
-  border-radius: 50%;
-}
-
-/* Mobile calendar size */
-.flatpickr-calendar {
-  font-size: 16px;
 }

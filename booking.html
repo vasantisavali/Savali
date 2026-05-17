@@ -1,100 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>Booking - Savali</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="style.css">
+
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<!-- 📅 Flatpickr -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- 📅 FLATPICKR -->
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 </head>
 
 <body>
 
-<header class="header">
-  <div class="nav-container">
+<!-- =========================
+HEADER
+========================= -->
 
-  <a href="index.html" class="logo">
-  <img src="images/logo.png">
-  <div class="logo-text">
-    <span class="brand">Savali</span>
-    <small>The shades of shadow</small>
-  </div>
+<header class="header">
+
+<div class="nav-container">
+
+<a href="index.html"
+class="logo">
+
+<img src="images/logo.png">
+
+<div class="logo-text">
+
+<span class="brand">
+Savali
+</span>
+
+<small>
+The shades of shadow
+</small>
+
+</div>
+
 </a>
 
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="stay.html">Stay</a>
+<nav class="nav-links">
 
-    </nav>
+<a href="index.html">Home</a>
 
-  </div>
+<a href="gallery.html">Gallery</a>
+
+<a href="stay.html">Stay</a>
+
+</nav>
+
+</div>
+
 </header>
+
+<!-- =========================
+MAIN CONTAINER
+========================= -->
 
 <div class="container">
 
-<h1>🌿 Book Your Stay at Savali</h1>
-<p class="subtitle">Your peaceful holiday retreat in nature</p>
+<h1>
+🌿 Book Your Stay at Savali
+</h1>
 
-<div class="form-box">
+<p class="subtitle">
+Your peaceful holiday retreat in nature
+</p>
+
+<!-- =========================
+CHECK AVAILABILITY
+========================= -->
+
+<div class="availability-box">
+
+<h3>
+📅 Check Availability
+</h3>
+
+<label>
+Check-in
+</label>
+
+<input type="text"
+id="checkin"
+placeholder="Select Check-in Date">
+
+<label>
+Check-out
+</label>
+
+<input type="text"
+id="checkout"
+placeholder="Select Check-out Date">
+
+<button
+type="button"
+id="checkBtn"
+class="btn">
+
+🔍 Check Availability
+
+</button>
+
+<div id="availability-msg"></div>
+
+</div>
+
+<!-- =========================
+BOOKING FORM
+========================= -->
+
+<div
+class="form-box"
+id="bookingSection"
+style="display:none;">
 
 <form id="bookingForm">
 
-<label>Full Name</label>
-<input type="text" name="name" required>
+<input type="hidden"
+name="checkin"
+id="hiddenCheckin">
 
-<label>Phone</label>
-<input type="tel" name="phone" required pattern="[0-9]{10}">
+<input type="hidden"
+name="checkout"
+id="hiddenCheckout">
 
-<label>Email</label>
-<input type="email" name="email" required>
+<label>
+Full Name
+</label>
 
-<label>Check-in</label>
-<input type="text" id="checkin" name="checkin" required>
+<input
+type="text"
+name="name"
+required>
 
-<label>Check-out</label>
-<input type="text" id="checkout" name="checkout" required>
+<label>
+Phone
+</label>
 
-<p id="availability-msg"></p>
+<input
+type="tel"
+name="phone"
+required
+pattern="[0-9]{10}">
 
-<label>Guests (Max 6)</label>
-<input type="number" name="guests" min="1" max="6" required>
-<!-- 🌿 LEAF PICKING GAME -->
-<!-- 🌿 LEAF PICKING GAME -->
+<label>
+Email
+</label>
+
+<input
+type="email"
+name="email"
+required>
+
+<label>
+Guests (Max 6)
+</label>
+
+<input
+type="number"
+name="guests"
+min="1"
+max="6"
+required>
+
+<!-- =========================
+🌿 LEAF GAME
+========================= -->
+
 <div class="leaf-game">
 
-  <h3>🌿 Pick Your Lucky Leaf</h3>
+<h3>
+🌿 Pick Your Lucky Leaf
+</h3>
 
-  <div class="leaf-container" id="leafContainer"></div>
+<div
+class="leaf-container"
+id="leafContainer">
+</div>
 
-  <div id="rewardPopup" class="reward-popup">
+<div
+id="rewardPopup"
+class="reward-popup">
 
-    <div class="reward-box">
+<div class="reward-box">
 
-      <h2>🎉 Your Surprise Reward</h2>
+<h2>
+🎉 Your Surprise Reward
+</h2>
 
-      <p id="rewardText"></p>
+<p id="rewardText"></p>
 
-      <button onclick="closeReward()">
-        Awesome 🌿
-      </button>
+<button
+type="button"
+onclick="closeReward()">
 
-    </div>
+Awesome 🌿
 
-  </div>
-
-  <input type="hidden" name="reward" id="rewardInput">
+</button>
 
 </div>
+
 </div>
-<button type="submit" id="submitBtn" class="btn">
-  🌿 Submit Booking
+
+<input
+type="hidden"
+name="reward"
+id="rewardInput">
+
+</div>
+
+<button
+type="submit"
+id="submitBtn"
+class="btn">
+
+🌿 Submit Booking
+
 </button>
 
 </form>
@@ -103,418 +239,736 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 </div>
 
-<!-- WhatsApp Floating -->
-<a href="https://wa.me/919890021266" class="whatsapp">💬</a>
+<!-- =========================
+WHATSAPP
+========================= -->
 
-Update your footer like this to include Instagram and Facebook icons properly:
+<a href="https://wa.me/919890021266"
+class="whatsapp">
 
-<!-- FONT AWESOME -->
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+💬
 
-<!-- FOOTER -->
+</a>
+
+<!-- =========================
+FOOTER
+========================= -->
+
 <footer class="footer">
-  <div class="footer-container">
 
-    <!-- BRAND -->
-    <div class="footer-col">
-      <h3>Savali</h3>
-      <p>Nature. Culture. Adventure.</p>
+<div class="footer-container">
 
-      <!-- SOCIAL MEDIA -->
-      <div class="social-icons">
+<!-- BRAND -->
 
-  <a href="https://www.instagram.com/savalibhor/" target="_blank">
-    <i class="fa-brands fa-instagram"></i>
-  </a>
+<div class="footer-col">
 
-  <a href="https://www.facebook.com/profile.php?id=61577449064997" target="_blank">
-    <i class="fa-brands fa-facebook"></i>
-  </a>
+<h3>
+Savali
+</h3>
+
+<p>
+Nature. Culture. Adventure.
+</p>
+
+<div class="social-icons">
+
+<a href="https://www.instagram.com/savalibhor/"
+target="_blank">
+
+<i class="fa-brands fa-instagram"></i>
+
+</a>
+
+<a href="https://www.facebook.com/profile.php?id=61577449064997"
+target="_blank">
+
+<i class="fa-brands fa-facebook"></i>
+
+</a>
 
 </div>
-    </div>
 
-    <!-- LINKS -->
-    <div class="footer-col">
-      <h4>Links</h4>
-      <a href="index.html">Home</a>
-      <a href="booking.html">Booking</a>
-      <a href="gallery.html">Gallery</a>
-    </div>
+</div>
 
-    <!-- CONTACT -->
-    <div class="footer-col">
-      <h4>Contact</h4>
+<!-- LINKS -->
 
-      <p><strong>Names:</strong> Vasanti / Sanjay</p>
+<div class="footer-col">
 
-      <p>
-        <strong>Phone:</strong> 
-        <a href="tel:+919890021266">+91 9890021266</a>
-      </p>
+<h4>
+Links
+</h4>
 
-      <p>
-        <strong>Location:</strong> 
-        <a href="https://www.google.com/maps?q=Saavali+The+Shades+of+Shadow+Bhor" target="_blank">
-          📍 Bhor
-        </a>
-      </p>
-    </div>
+<a href="index.html">
+Home
+</a>
 
-  </div>
-  <p class="copyright">© SanVsan Solutions Pvt.Ltd.</p>
+<a href="booking.html">
+Booking
+</a>
+
+<a href="gallery.html">
+Gallery
+</a>
+
+</div>
+
+<!-- CONTACT -->
+
+<div class="footer-col">
+
+<h4>
+Contact
+</h4>
+
+<p>
+<strong>Names:</strong>
+Vasanti / Sanjay
+</p>
+
+<p>
+
+<strong>Phone:</strong>
+
+<a href="tel:+919890021266">
++91 9890021266
+</a>
+
+</p>
+
+<p>
+
+<strong>Location:</strong>
+
+<a href="https://www.google.com/maps?q=Saavali+The+Shades+of+Shadow+Bhor"
+target="_blank">
+
+📍 Bhor
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+<p class="copyright">
+© SanVsan Solutions Pvt.Ltd.
+</p>
+
 </footer>
+
+<!-- =========================
+SCRIPT
+========================= -->
 
 <script>
 
 // ==============================
-// 🔗 SCRIPT URL
+// 🔗 GOOGLE SCRIPT URL
 // ==============================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzCySmyMABI89-8spu4WAavbOQcFRaquBsOT_3L7gITDjBNCBbFplYPgVvfwOEiCZr5tQ/exec";
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbzCySmyMABI89-8spu4WAavbOQcFRaquBsOT_3L7gITDjBNCBbFplYPgVvfwOEiCZr5tQ/exec";
 
 // ==============================
-// 📅 GLOBAL
+// 📅 ELEMENTS
 // ==============================
-let bookedDates = [];
+const checkin =
+document.getElementById("checkin");
 
-const checkin = document.getElementById("checkin");
-const checkout = document.getElementById("checkout");
-const msg = document.getElementById("availability-msg");
-const guestInput = document.querySelector('[name="guests"]');
-const btn = document.getElementById("submitBtn");
+const checkout =
+document.getElementById("checkout");
+
+const checkBtn =
+document.getElementById("checkBtn");
+
+const msg =
+document.getElementById("availability-msg");
+
+const bookingSection =
+document.getElementById("bookingSection");
+
+const btn =
+document.getElementById("submitBtn");
+
+const guestInput =
+document.querySelector('[name="guests"]');
 
 // ==============================
-// 📅 INIT CALENDAR
+// 📅 CALENDAR
 // ==============================
-const checkinPicker = flatpickr("#checkin", {
-  minDate: "today",
-  disable: bookedDates,
-  dateFormat: "Y-m-d",
-  onChange: validateDates
+flatpickr("#checkin", {
+
+minDate: "today",
+dateFormat: "Y-m-d",
+disableMobile: true
+
 });
 
-const checkoutPicker = flatpickr("#checkout", {
-  minDate: "today",
-  disable: bookedDates,
-  dateFormat: "Y-m-d",
-  onChange: validateDates
+flatpickr("#checkout", {
+
+minDate: "today",
+dateFormat: "Y-m-d",
+disableMobile: true
+
 });
 
 // ==============================
-// 📅 FETCH BOOKED DATES
+// 🔍 CHECK AVAILABILITY
 // ==============================
-fetch(SCRIPT_URL)
-  .then(res => res.json())
-  .then(data => {
-    bookedDates = data;
-    checkinPicker.set("disable", bookedDates);
-    checkoutPicker.set("disable", bookedDates);
-  })
-  .catch(() => {
-    console.log("Could not load booked dates");
-  });
+checkBtn.addEventListener(
+"click",
+async function(){
 
-// ==============================
-// 🔓 OPEN CALENDAR
-// ==============================
-checkin.addEventListener("focus", () => checkinPicker.open());
-checkout.addEventListener("focus", () => checkoutPicker.open());
+// Empty validation
+if(
+!checkin.value ||
+!checkout.value
+){
 
-// ==============================
-// 🔍 VALIDATION
-// ==============================
-function validateDates() {
+msg.className =
+"error-box";
 
-  if (!checkin.value || !checkout.value) return false;
+msg.innerHTML =
+"⚠ Please select check-in and check-out dates.";
 
-  // Convert selected dates
-  const inDate = new Date(checkin.value);
-  const outDate = new Date(checkout.value);
+return;
 
-  // Check checkout after checkin
-  if (outDate <= inDate) {
-
-    msg.style.color = "red";
-    msg.innerText = "⚠ Check-out must be after check-in";
-
-    return false;
-  }
-
-  // Check booked dates between range
-  let current = new Date(inDate);
-
-  while (current <= outDate) {
-
-    const formatted =
-      current.toISOString().split("T")[0];
-
-    if (bookedDates.includes(formatted)) {
-
-      msg.style.color = "red";
-      msg.innerText =
-        "❌ Selected dates are not available";
-
-      return false;
-    }
-
-    current.setDate(current.getDate() + 1);
-  }
-
-  // Success
-  msg.style.color = "green";
-  msg.innerText = "✅ Dates available";
-
-  return true;
 }
+
+// Date validation
+if(
+checkout.value <= checkin.value
+){
+
+msg.className =
+"error-box";
+
+msg.innerHTML =
+"⚠ Check-out must be after check-in.";
+
+return;
+
+}
+
+try{
+
+msg.className =
+"loading-box";
+
+msg.innerHTML =
+"⏳ Checking availability...";
+
+// FETCH GOOGLE CALENDAR DATES
+const response =
+await fetch(SCRIPT_URL);
+
+const bookedDates =
+await response.json();
+
+let start =
+new Date(checkin.value);
+
+let end =
+new Date(checkout.value);
+
+let unavailable = false;
+
+// CHECK ALL DATES
+for(
+let d = new Date(start);
+d < end;
+d.setDate(d.getDate()+1)
+)
+{
+
+let current =
+d.toISOString().split("T")[0];
+
+if(
+bookedDates.includes(current)
+){
+
+unavailable = true;
+break;
+
+}
+
+}
+
+// ==============================
+// ❌ IF NOT AVAILABLE
+// ==============================
+if(unavailable){
+
+// FIND NEXT AVAILABLE DATE
+// ==============================
+// 🔍 FIND NEXT AVAILABLE CHECK-IN
+// KEEP SAME CHECKOUT
+// ==============================
+
+// Original checkout
+let originalCheckout =
+new Date(end);
+
+// Start searching
+let suggestedCheckin =
+new Date(start);
+
+let validStayFound = false;
+
+// Find next valid range
+while(!validStayFound){
+
+validStayFound = true;
+
+// Check every date
+for(
+let d = new Date(suggestedCheckin);
+d < originalCheckout;
+d.setDate(d.getDate()+1)
+){
+
+let current =
+d.toISOString().split("T")[0];
+
+// If any date booked
+if(
+bookedDates.includes(current)
+){
+
+validStayFound = false;
+
+// Move checkin one day forward
+suggestedCheckin.setDate(
+suggestedCheckin.getDate() + 1
+);
+
+break;
+
+}
+
+}
+
+}
+
+// KEEP SAME CHECKOUT
+let suggestedCheckout =
+new Date(originalCheckout);
+
+// FORMAT
+const newCheckin =
+suggestedCheckin
+.toISOString()
+.split("T")[0];
+
+const newCheckout =
+suggestedCheckout
+.toISOString()
+.split("T")[0];
+
+// SHOW MESSAGE
+msg.className =
+"error-box";
+
+msg.innerHTML =
+
+"❌ Selected dates are not available.<br><br>" +
+
+"<div class='suggest-box'>" +
+
+"✅ Suggested Available Stay<br><br>" +
+
+"📅 Date  available for check-in:<br>" +
+
+"<strong>" +
+newCheckin +
+"</strong><br><br>" +
+
+"👉 Please select your checkout date after this check-in date.<br><br>" +
+
+"❓ Do you want to continue with suggested dates?" +
+
+"<br><br>" +
+
+"<button id='yesBtn' class='suggest-btn yes-btn'>" +
+"✅ Yes Continue" +
+"</button>" +
+
+"<button id='noBtn' class='suggest-btn no-btn'>" +
+"❌ No Change Dates" +
+"</button>" +
+
+"</div>";
+
+bookingSection.style.display =
+"none";
+
+// YES BUTTON
+setTimeout(() => {
+
+document.getElementById(
+"yesBtn"
+).addEventListener(
+"click",
+function(){
+
+// AUTO FILL
+checkin._flatpickr.setDate(
+newCheckin
+);
+
+
+
+// SUCCESS MESSAGE
+msg.className =
+"success-box";
+
+msg.innerHTML =
+
+"✅ Suggested dates selected successfully.<br><br>" +
+
+"Please complete booking details below.";
+
+// SHOW FORM
+bookingSection.style.display =
+"block";
+
+// HIDDEN INPUTS
+document.getElementById(
+"hiddenCheckin"
+).value = newCheckin;
+
+document.getElementById(
+"hiddenCheckout"
+).value = newCheckout;
+
+// SCROLL
+bookingSection.scrollIntoView({
+behavior:"smooth"
+});
+
+});
+
+
+// NO BUTTON
+document.getElementById(
+"noBtn"
+).addEventListener(
+"click",
+function(){
+
+msg.className =
+"error-box";
+
+msg.innerHTML =
+
+"📅 Please select different dates to continue booking.";
+
+bookingSection.style.display =
+"none";
+
+});
+
+},100);
+
+return;
+
+}
+
+// ==============================
+// ✅ AVAILABLE
+// ==============================
+msg.className =
+"success-box";
+
+msg.innerHTML =
+
+"✅ Great News!<br><br>" +
+
+"Your selected dates are available.<br><br>" +
+
+"Please complete booking details below.";
+
+bookingSection.style.display =
+"block";
+
+// HIDDEN DATES
+document.getElementById(
+"hiddenCheckin"
+).value = checkin.value;
+
+document.getElementById(
+"hiddenCheckout"
+).value = checkout.value;
+
+// SCROLL
+bookingSection.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+catch(err){
+
+msg.className =
+"error-box";
+
+msg.innerHTML =
+
+"⚠ Unable to check availability.<br>Please try again.";
+
+console.log(err);
+
+}
+
+});
 
 // ==============================
 // 👥 GUEST LIMIT
 // ==============================
-guestInput.addEventListener("input", function() {
-  if (this.value > 6) {
-    alert("⚠ Maximum 6 guests allowed.\nFor more, contact us on WhatsApp.");
-    window.open("https://wa.me/919890021266", "_blank");
-    this.value = 6;
-  }
+guestInput.addEventListener(
+"input",
+function(){
+
+if(this.value > 6){
+
+alert(
+
+"⚠ Maximum 6 guests allowed.\n\n" +
+
+"For more guests please contact us on WhatsApp."
+
+);
+
+window.open(
+"https://wa.me/919890021266",
+"_blank"
+);
+
+this.value = 6;
+
+}
+
 });
 
 // ==============================
-// 📩 SUBMIT BOOKING (FIXED)
+// 📩 SUBMIT BOOKING
 // ==============================
-document.getElementById("bookingForm").addEventListener("submit", function(e) {
+document.getElementById(
+"bookingForm"
+).addEventListener(
+"submit",
+function(e){
 
-  e.preventDefault();
+e.preventDefault();
 
-  if (!validateDates()) {
-    alert("❌ Please select valid available dates.");
-    return;
-  }
+const formData =
+new FormData(this);
 
-  const formData = new FormData(this);
+btn.innerText =
+"⏳ Sending...";
 
-  btn.innerText = "⏳ Sending...";
-  btn.disabled = true;
+btn.disabled = true;
 
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
+fetch(SCRIPT_URL, {
 
-    if (data.status === "success") {
+method:"POST",
+body:formData
 
-      alert(
-        "🌿 Booking Request Sent!\n\n" +
-        "📩 You will receive confirmation email.\n\n" +
-        "Thank you for choosing Savali 🌿"
-        
-      );
+})
 
-      document.getElementById("bookingForm").reset();
-      msg.innerText = "";
+.then(res => res.json())
 
-    } else {
-      alert("❌ " + (data.error || "Something failed"));
-    }
+.then(data => {
 
-    btn.innerText = "🌿 Submit Booking";
-    btn.disabled = false;
+if(data.status === "success"){
 
-  })
-  .catch(() => {
+alert(
 
-    alert("❌ Network error. Please try again.");
+"🌿 Booking Request Sent Successfully!\n\n" +
 
-    btn.innerText = "🌿 Submit Booking";
-    btn.disabled = false;
+"📩 You will receive confirmation email.\n\n" +
 
-  });
+"💳 Please pay booking amount within next 5 hours to confirm your booking.\n\n" +
+
+"⚡ Booking will be given on priority basis.\n\n" +
+
+"📌 Cancellation before 24 hrs:\n70% amount refundable.\n\n" +
+
+"Thank you for choosing Savali 🌿"
+
+);
+
+document.getElementById(
+"bookingForm"
+).reset();
+
+bookingSection.style.display =
+"none";
+
+msg.innerHTML = "";
+
+checkin.value = "";
+checkout.value = "";
+
+}
+else{
+
+alert(
+"❌ " +
+(data.error ||
+"Something went wrong")
+);
+
+}
+
+btn.innerText =
+"🌿 Submit Booking";
+
+btn.disabled = false;
+
+})
+
+.catch(() => {
+
+alert(
+"❌ Network error.\nPlease try again."
+);
+
+btn.innerText =
+"🌿 Submit Booking";
+
+btn.disabled = false;
 
 });
+
+});
+
 // ==============================
 // 🌿 LEAF GAME
 // ==============================
-
 const leafContainer =
-  document.getElementById("leafContainer");
+document.getElementById(
+"leafContainer"
+);
 
 const rewardPopup =
-  document.getElementById("rewardPopup");
+document.getElementById(
+"rewardPopup"
+);
 
 const rewardText =
-  document.getElementById("rewardText");
+document.getElementById(
+"rewardText"
+);
 
 const rewardInput =
-  document.getElementById("rewardInput");
+document.getElementById(
+"rewardInput"
+);
 
 const phoneInput =
-  document.querySelector('[name="phone"]');
+document.querySelector(
+'[name="phone"]'
+);
 
-const checkinInput =
-  document.querySelector('[name="checkin"]');
-
-const checkoutInput =
-  document.querySelector('[name="checkout"]');
-
-// 🍃 Leaf icons
+// LEAF ICONS
 const leafIcons = [
-  "🍃","🍀","🌿","🍂","🍁","☘️"
+"🍃","🍀","🌿","🍂","🍁","☘️"
 ];
 
-// 🎁 Rewards
+// REWARD LOGIC
 function generateReward(){
 
-  const random = Math.random();
+const random = Math.random();
 
-  if(random < 0.30){
-    return "5% OFF";
-  }
-  else if(random < 0.50){
-    return "₹500 OFF";
-  }
-  else if(random < 0.68){
-    return "Free Tea for 2";
-  }
-  else if(random < 0.82){
-    return "Bonfire Free";
-  }
-  else if(random < 0.92){
-    return "Free Breakfast for 2";
-  }
-  else if(random < 0.98){
-    return "10% OFF";
-  }
-  else{
-    return "🎁 Surprise Gift";
-  }
+if(random < 0.30){
+return "5% OFF";
+}
+else if(random < 0.50){
+return "₹500 OFF";
+}
+else if(random < 0.68){
+return "Free Tea for 2";
+}
+else if(random < 0.82){
+return "Bonfire Free";
+}
+else if(random < 0.92){
+return "Free Breakfast for 2";
+}
+else if(random < 0.98){
+return "10% OFF";
+}
+else{
+return "🎁 Surprise Gift";
+}
 
 }
 
-// ==============================
-// 🔑 UNIQUE BOOKING KEY
-// ==============================
-function getBookingKey(){
+// CREATE LEAVES
+for(let i=0;i<6;i++){
 
-  const phone =
-    phoneInput.value.trim();
+const leaf =
+document.createElement("div");
 
-  const checkin =
-    checkinInput.value.trim();
+leaf.className =
+"leaf";
 
-  const checkout =
-    checkoutInput.value.trim();
+leaf.innerHTML =
+leafIcons[
+Math.floor(
+Math.random() *
+leafIcons.length
+)
+];
 
-  return `saavaliReward_${phone}_${checkin}_${checkout}`;
+leaf.addEventListener(
+"click",
+() => {
 
-}
+if(
+!phoneInput.value
+){
 
-// ==============================
-// 🍃 CREATE LEAVES
-// ==============================
-for(let i = 0; i < 6; i++){
+alert(
+"⚠ Please enter phone number first."
+);
 
-  const leaf =
-    document.createElement("div");
-
-  leaf.className = "leaf";
-
-  // random leaf icon
-  leaf.innerHTML =
-    leafIcons[
-      Math.floor(
-        Math.random() * leafIcons.length
-      )
-    ];
-
-  leaf.addEventListener("click", () => {
-
-    // Require booking info first
-    if(
-      !phoneInput.value ||
-      !checkinInput.value ||
-      !checkoutInput.value
-    ){
-
-      alert(
-        "⚠ Please enter phone number and select dates first."
-      );
-
-      return;
-
-    }
-
-    // Unique booking key
-    const bookingKey =
-      getBookingKey();
-
-    // Existing reward
-    let savedReward =
-      localStorage.getItem(bookingKey);
-
-    // SAME booking → SAME reward
-    if(savedReward){
-
-      rewardText.innerHTML =
-        savedReward;
-
-      rewardPopup.style.display =
-        "flex";
-
-      rewardInput.value =
-        savedReward;
-
-      return;
-
-    }
-
-    // NEW booking → NEW reward
-    const reward =
-      generateReward();
-
-    // Save only for this booking
-    localStorage.setItem(
-      bookingKey,
-      reward
-    );
-
-    // Animation
-    leaf.style.transform =
-      "scale(1.3) rotate(12deg)";
-
-    leaf.style.background =
-      "#a5d6a7";
-
-    setTimeout(() => {
-
-      rewardText.innerHTML =
-        reward;
-
-      rewardPopup.style.display =
-        "flex";
-
-      rewardInput.value =
-        reward;
-
-    }, 400);
-
-  });
-
-  leafContainer.appendChild(leaf);
+return;
 
 }
 
-// ==============================
-// ❌ CLOSE POPUP
-// ==============================
+const reward =
+generateReward();
+
+rewardText.innerHTML =
+reward;
+
+rewardPopup.style.display =
+"flex";
+
+rewardInput.value =
+reward;
+
+});
+
+leafContainer.appendChild(
+leaf
+);
+
+}
+
+// CLOSE POPUP
 function closeReward(){
 
-  rewardPopup.style.display =
-    "none";
+rewardPopup.style.display =
+"none";
 
 }
+
 </script>
 
 </body>
+
 </html>
