@@ -95,17 +95,23 @@ CHECK AVAILABILITY
 Check-in
 </label>
 
-<input type="text"
+<input
+type="text"
 id="checkin"
-placeholder="Select Check-in Date">
+placeholder="Select Check-in Date"
+required
+readonly>
 
 <label>
 Check-out
 </label>
 
-<input type="text"
+<input
+type="text"
 id="checkout"
-placeholder="Select Check-out Date">
+placeholder="Select Check-out Date"
+required
+readonly>
 
 <button
 type="button"
@@ -165,7 +171,7 @@ Email
 <input
 type="email"
 name="email"
-required>
+>
 
 <label>
 Guests (Max 6)
@@ -258,8 +264,6 @@ FOOTER
 
 <div class="footer-container">
 
-<!-- BRAND -->
-
 <div class="footer-col">
 
 <h3>
@@ -290,8 +294,6 @@ target="_blank">
 
 </div>
 
-<!-- LINKS -->
-
 <div class="footer-col">
 
 <h4>
@@ -311,8 +313,6 @@ Gallery
 </a>
 
 </div>
-
-<!-- CONTACT -->
 
 <div class="footer-col">
 
@@ -362,13 +362,14 @@ target="_blank">
 SCRIPT
 ========================= -->
 
-<script>
+<script src="config.js">
+</script>
 
+<script>
 // ==============================
 // 🔗 GOOGLE SCRIPT URL
 // ==============================
-const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbzCySmyMABI89-8spu4WAavbOQcFRaquBsOT_3L7gITDjBNCBbFplYPgVvfwOEiCZr5tQ/exec";
+
 
 // ==============================
 // 📅 ELEMENTS
@@ -395,23 +396,136 @@ const guestInput =
 document.querySelector('[name="guests"]');
 
 // ==============================
-// 📅 CALENDAR
+// 📅 FLATPICKR
 // ==============================
-flatpickr("#checkin", {
+let bookedDates = [];
 
-minDate: "today",
-dateFormat: "Y-m-d",
-disableMobile: true
+// ==============================
+// 📅 LOAD BOOKED DATES
+// ==============================
+async function loadCalendar() {
 
-});
+  const response =
+    await fetch(SCRIPT_URL);
 
-flatpickr("#checkout", {
+  bookedDates =
+    await response.json();
 
-minDate: "today",
-dateFormat: "Y-m-d",
-disableMobile: true
+  // ==============================
+  // CHECK-IN CALENDAR
+  // ==============================
+  flatpickr("#checkin", {
 
-});
+    minDate: "today",
+
+    maxDate: new Date(
+      new Date().setMonth(
+        new Date().getMonth() + 2
+      )
+    ),
+
+    dateFormat: "Y-m-d",
+
+    disableMobile: true,
+
+    disable: bookedDates,
+
+    onDayCreate: function(
+  dObj,
+  dStr,
+  fp,
+  dayElem
+) {
+
+  const year =
+    dayElem.dateObj.getFullYear();
+
+  const month =
+    String(
+      dayElem.dateObj.getMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      dayElem.dateObj.getDate()
+    ).padStart(2, "0");
+
+  const date =
+    `${year}-${month}-${day}`;
+
+  if (bookedDates.includes(date)) {
+
+    dayElem.classList.add(
+      "booked-day"
+    );
+
+    dayElem.title =
+      "Booked";
+
+  }
+
+}
+  });
+
+  // ==============================
+  // CHECKOUT CALENDAR
+  // ==============================
+  flatpickr("#checkout", {
+
+    minDate: "today",
+
+    maxDate: new Date(
+      new Date().setMonth(
+        new Date().getMonth() + 2
+      )
+    ),
+
+    dateFormat: "Y-m-d",
+
+    disableMobile: true,
+
+   
+onDayCreate: function(
+  dObj,
+  dStr,
+  fp,
+  dayElem
+) {
+
+  const year =
+    dayElem.dateObj.getFullYear();
+
+  const month =
+    String(
+      dayElem.dateObj.getMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      dayElem.dateObj.getDate()
+    ).padStart(2, "0");
+
+  const date =
+    `${year}-${month}-${day}`;
+
+  if (bookedDates.includes(date)) {
+
+    dayElem.classList.add(
+      "booked-day"
+    );
+
+    dayElem.title =
+      "Booked";
+
+  }
+
+}
+  });
+
+}
+
+// LOAD CALENDAR
+loadCalendar();
 
 // ==============================
 // 🔍 CHECK AVAILABILITY
@@ -420,7 +534,7 @@ checkBtn.addEventListener(
 "click",
 async function(){
 
-// Empty validation
+// EMPTY VALIDATION
 if(
 !checkin.value ||
 !checkout.value
@@ -436,7 +550,7 @@ return;
 
 }
 
-// Date validation
+// CHECKOUT VALIDATION
 if(
 checkout.value <= checkin.value
 ){
@@ -474,13 +588,12 @@ new Date(checkout.value);
 
 let unavailable = false;
 
-// CHECK ALL DATES
+// CHECK SELECTED RANGE
 for(
 let d = new Date(start);
 d < end;
 d.setDate(d.getDate()+1)
-)
-{
+){
 
 let current =
 d.toISOString().split("T")[0];
@@ -497,49 +610,55 @@ break;
 }
 
 // ==============================
-// ❌ IF NOT AVAILABLE
+// ❌ IF DATES UNAVAILABLE
 // ==============================
 if(unavailable){
 
-// FIND NEXT AVAILABLE DATE
-// ==============================
-// 🔍 FIND NEXT AVAILABLE CHECK-IN
-// KEEP SAME CHECKOUT
-// ==============================
+// STAY DURATION
+const stayDuration =
+Math.ceil(
+(end - start) /
+(1000 * 60 * 60 * 24)
+);
 
-// Original checkout
-let originalCheckout =
-new Date(end);
-
-// Start searching
+// START SEARCHING
 let suggestedCheckin =
 new Date(start);
 
 let validStayFound = false;
 
-// Find next valid range
+// FIND NEXT CONTINUOUS STAY
 while(!validStayFound){
 
 validStayFound = true;
 
-// Check every date
+// TEMP CHECKOUT
+let tempCheckout =
+new Date(suggestedCheckin);
+
+tempCheckout.setDate(
+tempCheckout.getDate() +
+stayDuration
+);
+
+// CHECK EVERY NIGHT
 for(
 let d = new Date(suggestedCheckin);
-d < originalCheckout;
+d < tempCheckout;
 d.setDate(d.getDate()+1)
 ){
 
 let current =
 d.toISOString().split("T")[0];
 
-// If any date booked
+// IF BOOKED
 if(
 bookedDates.includes(current)
 ){
 
 validStayFound = false;
 
-// Move checkin one day forward
+// MOVE NEXT DAY
 suggestedCheckin.setDate(
 suggestedCheckin.getDate() + 1
 );
@@ -552,11 +671,16 @@ break;
 
 }
 
-// KEEP SAME CHECKOUT
+// FINAL CHECKOUT
 let suggestedCheckout =
-new Date(originalCheckout);
+new Date(suggestedCheckin);
 
-// FORMAT
+suggestedCheckout.setDate(
+suggestedCheckout.getDate() +
+stayDuration
+);
+
+// FORMAT DATES
 const newCheckin =
 suggestedCheckin
 .toISOString()
@@ -573,30 +697,35 @@ msg.className =
 
 msg.innerHTML =
 
-"❌ Selected dates are not available.<br><br>" +
+
+"❌ Oops! Your selected stay dates are currently unavailable.<br><br>" +
 
 "<div class='suggest-box'>" +
 
-"✅ Suggested Available Stay<br><br>" +
+"🌿 <strong>Good News!</strong><br><br>" +
 
-"📅 Date  available for check-in:<br>" +
+"We found the next available check-in date for your stay.<br><br>" +
 
-"<strong>" +
+"📅 <strong>Available Check-in Date:</strong><br>" +
+
+"<span class='green-date'>" +
 newCheckin +
-"</strong><br><br>" +
+"</span><br><br>" +
 
-"👉 Please select your checkout date after this check-in date.<br><br>" +
+"👉 Continue with this check-in date and please select your checkout date again based on availability.<br><br>" +
 
-"❓ Do you want to continue with suggested dates?" +
+"✨ Or choose any other convenient dates from the calendar.<br><br>" +
+"👉 Select an option below to continue." +
 
 "<br><br>" +
 
 "<button id='yesBtn' class='suggest-btn yes-btn'>" +
 "✅ Yes Continue" +
 "</button>" +
-
 "<button id='noBtn' class='suggest-btn no-btn'>" +
-"❌ No Change Dates" +
+
+"📅 Choose Different Dates" +
+
 "</button>" +
 
 "</div>";
@@ -604,21 +733,36 @@ newCheckin +
 bookingSection.style.display =
 "none";
 
-// YES BUTTON
+// YES / NO BUTTONS
 setTimeout(() => {
 
+// ==============================
+// ✅ YES BUTTON
+// ==============================
 document.getElementById(
 "yesBtn"
 ).addEventListener(
 "click",
 function(){
 
-// AUTO FILL
+// Set only check-in
 checkin._flatpickr.setDate(
 newCheckin
 );
 
+// Clear checkout completely
+checkout._flatpickr.clear();
 
+checkout.value = "";
+
+// Hidden fields
+document.getElementById(
+"hiddenCheckin"
+).value = newCheckin;
+
+document.getElementById(
+"hiddenCheckout"
+).value = "";
 
 // SUCCESS MESSAGE
 msg.className =
@@ -626,24 +770,15 @@ msg.className =
 
 msg.innerHTML =
 
-"✅ Suggested dates selected successfully.<br><br>" +
+"✅ Suggested check-in date selected successfully.<br><br>" +
 
-"Please complete booking details below.";
+"👉 Please select your checkout date to continue booking.";
 
 // SHOW FORM
 bookingSection.style.display =
 "block";
 
-// HIDDEN INPUTS
-document.getElementById(
-"hiddenCheckin"
-).value = newCheckin;
-
-document.getElementById(
-"hiddenCheckout"
-).value = newCheckout;
-
-// SCROLL
+// Scroll
 bookingSection.scrollIntoView({
 behavior:"smooth"
 });
@@ -651,22 +786,45 @@ behavior:"smooth"
 });
 
 
-// NO BUTTON
+// ==============================
+// ❌ NO BUTTON
+// ==============================
 document.getElementById(
 "noBtn"
 ).addEventListener(
 "click",
 function(){
 
+// Clear flatpickr
+checkin._flatpickr.clear();
+
+checkout._flatpickr.clear();
+
+// Clear visible inputs
+checkin.value = "";
+
+checkout.value = "";
+
+// Clear hidden inputs
+document.getElementById(
+"hiddenCheckin"
+).value = "";
+
+document.getElementById(
+"hiddenCheckout"
+).value = "";
+
+// Hide booking form
+bookingSection.style.display =
+"none";
+
+// MESSAGE
 msg.className =
-"error-box";
+"loading-box";
 
 msg.innerHTML =
 
-"📅 Please select different dates to continue booking.";
-
-bookingSection.style.display =
-"none";
+"📅 Please select new check-in and check-out dates to continue.";
 
 });
 
@@ -693,7 +851,7 @@ msg.innerHTML =
 bookingSection.style.display =
 "block";
 
-// HIDDEN DATES
+// HIDDEN INPUTS
 document.getElementById(
 "hiddenCheckin"
 ).value = checkin.value;
@@ -762,6 +920,70 @@ function(e){
 
 e.preventDefault();
 
+// ==============================
+// 📅 CHECK-IN VALIDATION
+// ==============================
+if(!checkin.value){
+
+alert(
+"⚠ Please select check-in date."
+);
+
+return;
+
+}
+
+// ==============================
+// 📅 CHECK-OUT VALIDATION
+// ==============================
+if(!checkout.value){
+
+alert(
+"⚠ Please select checkout date."
+);
+
+return;
+
+}
+
+// ==============================
+// 📅 CHECKOUT AFTER CHECKIN
+// ==============================
+if(
+checkout.value <= checkin.value
+){
+
+alert(
+"⚠ Checkout date must be after check-in date."
+);
+
+return;
+
+}
+
+// ==============================
+// 🌿 REWARD VALIDATION
+// ==============================
+if(!rewardInput.value){
+
+alert(
+"🌿 Please pick your lucky leaf before submitting booking."
+);
+
+return;
+
+}
+
+// Hidden values update
+document.getElementById(
+"hiddenCheckin"
+).value = checkin.value;
+
+document.getElementById(
+"hiddenCheckout"
+).value = checkout.value;
+
+// Form data
 const formData =
 new FormData(this);
 
@@ -793,7 +1015,7 @@ alert(
 
 "⚡ Booking will be given on priority basis.\n\n" +
 
-"📌 Cancellation before 24 hrs:\n70% amount refundable.\n\n" +
+"📌 Cancellation before 48 hrs:\n70% amount refundable.\n\n" +
 
 "Thank you for choosing Savali 🌿"
 
@@ -886,22 +1108,22 @@ if(random < 0.30){
 return "5% OFF";
 }
 else if(random < 0.50){
-return "₹500 OFF";
+return "₹100 OFF";
 }
 else if(random < 0.68){
-return "Free Tea for 2";
+return "₹500 OFF";
 }
 else if(random < 0.82){
-return "Bonfire Free";
+return "₹250 OFF";
 }
 else if(random < 0.92){
-return "Free Breakfast for 2";
+return "5% OFF";
 }
 else if(random < 0.98){
 return "10% OFF";
 }
 else{
-return "🎁 Surprise Gift";
+return "🎁 20% OFF On your next booking";
 }
 
 }

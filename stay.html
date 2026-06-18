@@ -9,7 +9,7 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<script>
+<script >
   // Set countdown time (example: 6 hours from now)
   let countDownDate = new Date().getTime() + (6 * 60 * 60 * 1000);
 
@@ -78,13 +78,20 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     💰 Weekends: <b>₹7,000</b> / night
   </p>
 
-  <p>👨‍👩‍👧‍👦 1 to 6 Guests</p>
+<p class="occupancy-info">
+🌿 <strong>Perfect for Family Getaways & Group Stays</strong><br>
+👨‍👩‍👧‍👦 Villa tariff includes 4 Adults + 2 Children (up to 12 years)<br>
+🏡 Accommodates up to 8 Adults + 2 Children (up to 12 years)<br>
+💰 Additional Adult Guest: ₹1,000 per person per night<br>
+🛏️ Extra bedding provided for additional guests<br>
+✨ Enjoy a comfortable stay amidst nature
+</p>
 
   <span class="badge">🔔 Limited Availability</span>
 
-  <p class="alert">
-    🔥 2 out of 5 villas already booked – Reserve yours now!
-  </p>
+ <p class="alert" id="bookingAlert">
+     Loading latest availability...
+</p>
 <!---🔥 High demand – Most weekends get booked in advance-->
 <!--- ⚠ Only 1 villa available – Book early!-->
 <!--  📅 Weekends fill fast – Book early to avoid disappointment!-->
@@ -177,7 +184,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 <div class="rules-box">
   <p>✔ Check-in: After 12 PM</p>
-  <p>✔ Check-out: Before 11 AM</p>
+  <p>✔ Check-out: Before 10 AM</p>
   <p>✔ No loud music after 10 PM</p>
   <p>✔ Respect nature — leave only footprints, take only memories</p>
 </div>
@@ -271,6 +278,28 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
   <p class="copyright">© SanVsan Solutions Pvt.Ltd.</p>
 </footer>
+<script src="config.js"></script>
 
+<script>
+fetch(SCRIPT_URL + "?alert=1")
+  .then(res => res.json())
+  .then(data => {
+
+    console.log(data);
+
+    document.getElementById("bookingAlert").innerHTML =
+      data.message;
+
+  })
+  .catch(err => {
+
+    console.error(err);
+
+    document.getElementById("bookingAlert").innerHTML =
+      "📅 Weekends fill fast – Reserve your stay today!";
+
+  });
+</script>
+</script>
 </body>
 </html>

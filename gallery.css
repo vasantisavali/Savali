@@ -279,8 +279,9 @@
   background: rgba(0,0,0,0.6);
   padding: 8px 14px;
   border-radius: 20px;
-}img {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
+}
+.gallery-page img {
+width: 100%;
+height: 500px;
+object-fit: cover;
 }
